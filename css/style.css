@@ -1,0 +1,61 @@
+body {
+	font-family: sans-serif;
+	margin: 0px;
+	padding: 0px;
+	background: #333;
+	color: #eee;
+}
+
+.page {
+	display: block;
+	position: absolute;
+	top: 1vh;
+	bottom: 1vh;
+	left: 1vw;
+	right: 1vw;
+
+	text-align: center;
+	width: 98vw;
+	height: 98vh;
+}
+
+.page .header_spacing {
+	position: relative;
+	height: 25vh;
+}
+
+.page .header {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	height: 25vh;
+	width: 100vw;
+}
+
+.page .header #home_timedisplay {
+	font-size: 500%;
+	font-family: monospace;
+}
+
+.page .header #home_weekday {
+	font-size: 140%;
+}
+
+.page .footer_spacing {
+	position: relative;
+	height: 10vh;
+}
+
+.page .footer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: fixed;
+	bottom: 0px;
+	left: 0px;
+	height: 10vh;
+	width: 100vw;
+}
