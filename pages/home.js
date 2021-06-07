@@ -2,6 +2,9 @@
 
 const _utils = arguments[0];
 
+let timedisplay = null;
+let weather = null;
+
 function getTimeWeatherValues() {
 	const t = new GTATime();
 	const hour = t.hour.toString().padStart(2, "0");
@@ -10,8 +13,6 @@ function getTimeWeatherValues() {
 }
 
 function setTimeWeatherValues() {
-	const timedisplay = document.getElementById("home_timedisplay");
-	const weather = document.getElementById("home_weather");
 	if(timedisplay && weather) {
 		const v = getTimeWeatherValues();
 		timedisplay.innerHTML = v.time;
@@ -25,16 +26,13 @@ const v = getTimeWeatherValues();
 
 return _utils.createPage("home", [
 	_utils.createHeaderFooter("header_time",
-		_utils.createElement("div", {
+		timedisplay = _utils.createElement("div", {
 			id: "home_timedisplay",
 			contents: v.time
 		})
 	),
 	_utils.createSection("Weather", [
-		_utils.createElement("div", {
-			id: "home_weather",
-			contents: v.weather
-		})
+		weather = _utils.createElement("div", { contents: v.weather })
 	]),
 	_utils.createHeaderFooter("footer",
 		_utils.createElement("img", {
