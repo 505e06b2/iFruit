@@ -1,4 +1,5 @@
 body {
+	visibility: hidden;
 	font-family: sans-serif;
 	margin: 0px;
 	padding: 0px;
@@ -11,20 +12,42 @@ body {
 	position: absolute;
 	top: 1vh;
 	bottom: 1vh;
-	left: 1vw;
-	right: 1vw;
+	left: 10vw;
+	right: 10vw;
 
 	text-align: center;
-	width: 98vw;
+	width: 80vw;
 	height: 98vh;
+}
+
+@media (orientation: landscape) {
+	.page {
+		left: 25vw;
+		width: 50vw;
+	}
 }
 
 .page .header_spacing {
 	position: relative;
-	height: 25vh;
+	height: 10vh;
 }
 
 .page .header {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: fixed;
+	top: 0px;
+	height: 10vh;
+	font-size: 200%;
+}
+
+.page .header_time_spacing {
+	position: relative;
+	height: 25vh;
+}
+
+.page .header_time {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -35,13 +58,23 @@ body {
 	width: 100vw;
 }
 
-.page .header #home_timedisplay {
+.page .header_time #home_timedisplay {
 	font-size: 500%;
 	font-family: monospace;
 }
 
-.page .header #home_weekday {
+.page .header_time #home_weekday {
 	font-size: 140%;
+}
+
+.page .section_title {
+	font-size: 100%;
+	text-align: left;
+	border-bottom: solid 1px #eee;
+}
+
+.page .section {
+	font-size: 200%;
 }
 
 .page .footer_spacing {
@@ -58,4 +91,8 @@ body {
 	left: 0px;
 	height: 10vh;
 	width: 100vw;
+}
+
+.page .footer #home_drawericon {
+	font-size: 200%;
 }
