@@ -14,7 +14,7 @@ async function PageManager() {
 	}
 
 	let _utils = null; //loadPage needs utils lol
-	_utils = await loadPage("_utils");
+	_utils = await loadPage("utils");
 
 	const _page_dict = {
 		"home": await loadPage("home"),
