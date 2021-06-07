@@ -14,7 +14,11 @@
 			}
 
 			window.onpopstate = (e) => {
-				page.change("home");
+				if(e.state === null) {
+					history.back();
+					return;
+				}
+				page.change(e.state.page, true);
 			}
 		</script>
 	</head>

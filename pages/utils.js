@@ -26,7 +26,7 @@ return new (function() {
 			this.createElement("img", {
 				id: "back_icon",
 				src: "icons/remixicon-arrow-left-circle-line.svg",
-				onclick: () => page.change("home")
+				onclick: () => history.back()
 			})
 		);
 		contents.appendChild(

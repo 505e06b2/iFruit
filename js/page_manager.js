@@ -1,7 +1,13 @@
 async function PageManager() {
 	//public
-	this.change = (page_name) => {
-		if(page_name !== "home") history.pushState({page: page_name}, page_name);
+	this.change = (page_name, dont_save_state) => {
+		if(!dont_save_state) {
+			let current_page = "home";
+			try {
+				current_page = document.querySelector('.page').getAttribute("name");
+			} catch {}
+			history.pushState({page: page_name}, page_name);
+		}
 		document.body.innerHTML = "";
 		document.body.appendChild(_page_dict[page_name]);
 	}
@@ -18,7 +24,8 @@ async function PageManager() {
 
 	const _page_dict = {
 		"home": await loadPage("home"),
-		"drawer": await loadPage("drawer")
+		"drawer": await loadPage("drawer"),
+		"timer": await loadPage("timer")
 	};
 
 	return this;
