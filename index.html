@@ -2,15 +2,23 @@
 	<head>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>iFruit</title>
-		<link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
-		<script type="module" src="js/pages.js"></script>
 		<link rel="stylesheet" href="css/style.css">
 		<script src="GTA-Online-Weather/gtatime.js"></script>
+		<script src="js/page_manager.js"></script>
 		<script>
-			window.onload = () => {
-				initGTATime("GTA-Online-Weather");
+			let page = null;
+			window.onload = async () => {
+				await initGTATime("GTA-Online-Weather");
+				page = await PageManager();
+				page.change("home");
+			}
+
+			window.onpopstate = (e) => {
+				page.change("home");
 			}
 		</script>
 	</head>
-	<body></body>
+	<body>
+		<div id="loading">Loading...</div>
+	</body>
 </html>
