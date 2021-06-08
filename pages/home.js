@@ -32,6 +32,7 @@ return _utils.createPage("home", [
 	_utils.createSection("Weather", [
 		weather = _utils.createElement("div", { contents: v.weather })
 	]),
+	window.home_timers = _utils.createSection("Timers", []),
 	_utils.createHeaderFooter("footer",
 		_utils.createElement("img", {
 			id: "home_drawericon",

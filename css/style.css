@@ -49,6 +49,7 @@ body {
 	position: fixed;
 	top: 0px;
 	height: 10vh;
+	background: #333;
 }
 
 .page .header #back_icon {
@@ -91,8 +92,18 @@ body {
 	border-bottom: solid 1px #eee;
 }
 
+.page .section#section_timers {
+	display: none;
+}
+
+.page .section#section_timers .delete-timer {
+	cursor: pointer;
+	padding-left: 1vw;
+}
+
 .page .section {
 	font-size: 200%;
+	padding-bottom: 5vh;
 }
 
 .page .grid {
@@ -133,6 +144,7 @@ body {
 	left: 0px;
 	height: 10vh;
 	width: 100vw;
+	background: #333;
 }
 
 .page .footer #home_drawericon {

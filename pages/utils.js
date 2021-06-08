@@ -46,6 +46,7 @@ return new (function() {
 	this.createSection = (name, content) => {
 		const ret = document.createElement("div");
 		ret.className = "section";
+		ret.id = "section_" + name.toLowerCase();
 		const section_title = document.createElement("div");
 		section_title.className = "section_title";
 		section_title.innerText = name;
@@ -55,6 +56,11 @@ return new (function() {
 	};
 
 	this.createAppButton = (name, icon, onclick) => {
+		document.head.appendChild(this.createElement("link", {
+			rel: "preload",
+			href: icon,
+			as: "image"
+		}));
 		const ret = document.createElement("span");
 		ret.className = "app_icon";
 		ret.style.backgroundImage = `url("${icon}")`;
