@@ -2,6 +2,17 @@
 
 const _utils = arguments[0];
 
+function createIconPreload(href) {
+	return _utils.createElement("link", {
+		rel: "preload",
+		href: href,
+		as: "image"
+	});
+}
+
+document.head.appendChild(createIconPreload("icons/app_rockstar.png"));
+document.head.appendChild(createIconPreload("icons/app_rise.png"));
+
 return _utils.createPage("drawer", [
 	_utils.createAppHeader("Apps"), //back button
 	_utils.createElement("div", {

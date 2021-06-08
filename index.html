@@ -12,14 +12,6 @@
 				page = await PageManager();
 				page.change("home");
 			}
-
-			window.onpopstate = (e) => {
-				if(e.state === null) {
-					history.back();
-					return;
-				}
-				page.change(e.state.page, true);
-			}
 		</script>
 	</head>
 	<body>

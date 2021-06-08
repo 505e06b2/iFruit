@@ -12,15 +12,13 @@ function getTimeWeatherValues() {
 	return {"time": `${hour}:${min}`, "weather": t.weather.name};
 }
 
-function setTimeWeatherValues() {
+setInterval(() => {
 	if(timedisplay && weather) {
 		const v = getTimeWeatherValues();
 		timedisplay.innerHTML = v.time;
 		weather.innerHTML = v.weather;
 	}
-}
-
-setInterval(setTimeWeatherValues, 500);
+}, 500);
 
 const v = getTimeWeatherValues();
 

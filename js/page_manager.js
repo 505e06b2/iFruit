@@ -1,18 +1,22 @@
+location.hash = "#loading";
+
 async function PageManager() {
 	//public
-	this.change = (page_name, dont_save_state) => {
-		if(!dont_save_state) {
-			let current_page = "home";
-			try {
-				current_page = document.querySelector('.page').getAttribute("name");
-			} catch {}
-			history.pushState({page: page_name}, page_name);
-		}
-		document.body.innerHTML = "";
-		document.body.appendChild(_page_dict[page_name]);
+	this.change = (page_name) => {
+		location.hash = "#" + page_name;
 	}
 
 	//private
+	window.onhashchange = () => {
+		const goto = location.hash.slice(1);
+		if(goto === "loading") { //this is if encountered after loading
+			history.back();
+			return;
+		}
+		document.body.innerHTML = "";
+		document.body.appendChild(_page_dict[goto]);
+	}
+
 	async function loadPage(name) {
 		const async_type = Object.getPrototypeOf(async function(){}).constructor;
 		const js_script = await(await fetch(`pages/${name}.js`)).text();
