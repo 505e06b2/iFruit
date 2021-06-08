@@ -12,20 +12,39 @@ function msToGTAHrMin(ms) {
 }
 
 function createTimer(int_str, name) {
-	if(!name) name = id++;
+	if(!name) name = "Timer " + (id++);
 	let content;
+	let name_elem;
 
 	const gta_hours = parseInt(int_str);
 	const future_time = new Date((new Date()).getTime() + gta_hours*2*60000);
 	const elem = _utils.createElement("div", {
+		class: "timer",
 		contents: [
-			_utils.createElement("span", { contents: name + ") " }),
-			content = _utils.createElement("span", { contents: msToGTAHrMin(future_time.getTime() - (new Date()).getTime()) }),
 			_utils.createElement("img", {
-				class: "delete-timer",
 				src: "icons/remixicon-close-circle-line.svg",
-				onclick: () => {if(window.confirm("Are you sure you want to delete this timer?")) removeTimer()}
+				onclick: () => {if(window.confirm(`Are you sure you want to delete "${name}"?`)) removeTimer()}
 			}),
+			name_elem = _utils.createElement("span", {
+				class: "name",
+				contents: name,
+				onclick: () => {
+					const new_name = window.prompt(`New name for "${name}"`);
+					if(new_name) {
+						name = new_name;
+						name_elem.innerHTML = name;
+					}
+				}
+			}),
+			content = _utils.createElement("span", {
+				contents: msToGTAHrMin(future_time.getTime() - (new Date()).getTime()),
+				onclick: () => {
+					if(window.confirm(`Are you sure you want to reset "${name}"?`)) {
+						removeTimer();
+						createTimer(int_str, name);
+					}
+				}
+			})
 		]
 	});
 
