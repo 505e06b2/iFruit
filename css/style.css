@@ -6,6 +6,46 @@ body {
 	color: #eee;
 }
 
+input {
+	display: block;
+	width: 100%;
+	font-size: 200%;
+	background: #666;
+	border: none;
+	margin-bottom: 1vmin;
+	color: #eee;
+	border: 1px solid #999;
+	box-sizing: border-box;
+}
+
+input::placeholder {
+	color: #999;
+}
+
+.gtatime {
+	position: relative;
+}
+
+.gtatime::after {
+	content: "GTA Hours";
+	position: absolute;
+	display: block;
+	right: 2vw;
+	top: 25%;
+	bottom: 0px;
+	color: white;
+}
+
+button {
+	background: #666;
+	color: #eee;
+	display: block;
+	font-size: 200%;
+	width: 100%;
+	cursor: pointer;
+	border: none;
+}
+
 #loading {
 	position: absolute;
 	display: flex;
@@ -117,6 +157,10 @@ body {
 .page .section {
 	font-size: 200%;
 	padding-bottom: 5vh;
+}
+
+.page[name="timer"] button {
+	margin-top: 3vh;
 }
 
 .grid {

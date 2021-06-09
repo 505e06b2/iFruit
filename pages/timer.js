@@ -17,6 +17,7 @@ function createTimer(int_str, name) {
 	let name_elem;
 
 	const gta_hours = parseInt(int_str);
+	if(isNaN(gta_hours) || gta_hours <= 0) return;
 	const future_time = new Date((new Date()).getTime() + gta_hours*2*60000);
 	const elem = _utils.createElement("div", {
 		class: "timer",
@@ -81,6 +82,12 @@ let number;
 return _utils.createPage("timer", [
 	_utils.createAppHeader("Timer"), //back button
 	name = _utils.createElement("input", { type: "text", placeholder: "Name" }),
-	number = _utils.createElement("input", { type: "number", min: "1", step: "1", value: "5" }),
-	_utils.createElement("button", { contents: "Create Timer", onclick: () => createTimer(number.value, name.value) })
+	_utils.createElement("div", {
+		class: "gtatime",
+		contents: number = _utils.createElement("input", { type: "number", min: "1", step: "1", value: "5" }),
+	}),
+	_utils.createElement("button", {
+		contents: "Create Timer",
+		onclick: () => createTimer(number.value, name.value)
+	})
 ]);
