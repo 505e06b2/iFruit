@@ -80,6 +80,10 @@ return new (function() {
 					ret.className = value;
 					break;
 
+				case "name":
+					ret.setAttribute("name", value);
+					break;
+
 				case "contents":
 					if(Array.isArray(value)) { //Array of DOM Nodes
 						for(const x of value) ret.appendChild(x);

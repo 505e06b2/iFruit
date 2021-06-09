@@ -1,8 +1,7 @@
 //this is ran like an async function and does not spew into window.*
 
 const _utils = arguments[0];
-
-let id = 1;
+const page_manager = arguments[1];
 
 function msToGTAHrMin(ms) {
 	const gta_mins = ms / 2000;
@@ -11,16 +10,16 @@ function msToGTAHrMin(ms) {
 	return `${hrs}:${mins}`;
 }
 
-function createTimer(int_str, name) {
-	if(!name) name = "Timer " + (id++);
+function createTimer(future_time, name, dont_go_back) {
+	if(!name) name = "Timer " + (page_manager.persistence.timer_id++);
 	let content;
 	let name_elem;
 
-	const gta_hours = parseInt(int_str);
-	if(isNaN(gta_hours) || gta_hours <= 0) return;
-	const future_time = new Date((new Date()).getTime() + gta_hours*2*60000);
+	page_manager.persistence.timers[name] = future_time.getTime();
+
 	const elem = _utils.createElement("div", {
 		class: "timer",
+		name: name,
 		contents: [
 			_utils.createElement("img", {
 				src: "icons/remixicon-close-circle-line.svg",
@@ -32,7 +31,9 @@ function createTimer(int_str, name) {
 				onclick: () => {
 					const new_name = window.prompt(`New name for "${name}"`);
 					if(new_name) {
+						delete page_manager.persistence.timers[name];
 						name = new_name;
+						page_manager.persistence.timers[name] = future_time.getTime();
 						name_elem.innerHTML = name;
 					}
 				}
@@ -42,7 +43,7 @@ function createTimer(int_str, name) {
 				onclick: () => {
 					if(window.confirm(`Are you sure you want to reset "${name}"?`)) {
 						removeTimer();
-						createTimer(int_str, name);
+						createTimer(int_str, name, true);
 					}
 				}
 			})
@@ -50,11 +51,11 @@ function createTimer(int_str, name) {
 	});
 
 	const removeTimer = () => {
+		delete page_manager.persistence.timers[name];
 		elem.remove();
 		delete elem;
 		if(window.home_timers.childElementCount <= 1) {
 			window.home_timers.style.display = "";
-			window.onbeforeunload = null; //remove - are you sure you want to leave?
 		}
 	};
 
@@ -68,12 +69,17 @@ function createTimer(int_str, name) {
 		content.innerHTML = msToGTAHrMin(delta);
 	}, 500);
 
-
-	window.onbeforeunload = () => true; //are you sure you want to leave?
 	window.home_timers.style.display = "block";
 	window.home_timers.appendChild(elem);
+	if(dont_go_back) return;
 	history.back();
 	history.back();
+}
+
+if(page_manager.persistence.timer_id === undefined) page_manager.persistence.timer_id = 1;
+if(page_manager.persistence.timers === undefined) page_manager.persistence.timers = {};
+for(const [key, value] of Object.entries(page_manager.persistence.timers)) {
+	createTimer(new Date(value), key, true);
 }
 
 let name;
@@ -88,6 +94,18 @@ return _utils.createPage("timer", [
 	}),
 	_utils.createElement("button", {
 		contents: "Create Timer",
-		onclick: () => createTimer(number.value, name.value)
+		onclick: () => {
+			if(window.home_timers.querySelector(`[name="${name.value}"]`)) {
+				alert(`A timer with the name "${name.value}" already exists!`);
+				return;
+			}
+			const gta_hours = parseInt(number.value);
+			if(isNaN(gta_hours) || gta_hours <= 0) return;
+			const future_time = new Date((new Date()).getTime() + gta_hours*2*60000);
+
+			createTimer(future_time, name.value);
+			name.value = "";
+			number.value = "5"; //check it's the same as above
+		}
 	})
 ]);

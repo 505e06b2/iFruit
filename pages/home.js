@@ -1,6 +1,7 @@
 //this is ran like an async function and does not spew into window.*
 
 const _utils = arguments[0];
+const page_manager = arguments[1];
 
 let timedisplay = null;
 let weather = null;

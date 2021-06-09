@@ -115,6 +115,7 @@ button {
 	left: 0px;
 	height: 25vh;
 	width: 100vw;
+	background: #333;
 }
 
 .page .header_time #home_timedisplay {
