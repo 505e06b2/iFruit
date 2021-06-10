@@ -1,4 +1,11 @@
 return new (function() {
+	this.timeDeltaToGTADuration = (ms) => {
+		const gta_mins = ms / 2000;
+		const hrs = Math.floor(gta_mins / 60).toString().padStart(2, "0");
+		const mins = Math.floor(gta_mins % 60).toString().padStart(2, "0");
+		return `${hrs}:${mins}`;
+	};
+
 	this.createPage = (name, content) => {
 		const ret = document.createElement("div");
 		ret.setAttribute("name", name);
@@ -23,9 +30,9 @@ return new (function() {
 		const contents = document.createElement("div");
 		contents.className = "header";
 		contents.appendChild(
-			this.createElement("img", {
+			this.createElement("i", {
 				id: "back_icon",
-				src: "icons/remixicon-arrow-left-circle-line.svg",
+				class: "ri-arrow-left-circle-line",
 				onclick: () => history.back()
 			})
 		);

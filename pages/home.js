@@ -33,11 +33,11 @@ return _utils.createPage("home", [
 	_utils.createSection("Weather", [
 		weather = _utils.createElement("div", { contents: v.weather })
 	]),
-	window.home_timers = _utils.createSection("Timers", []),
+	page_manager.home_timers = _utils.createSection("Timers", []),
 	_utils.createHeaderFooter("footer",
-		_utils.createElement("img", {
+		_utils.createElement("i", {
 			id: "home_drawericon",
-			src: "icons/remixicon-grid-fill.svg",
+			class: "ri-grid-fill",
 			onclick: () => page.change("drawer")
 		})
 	)

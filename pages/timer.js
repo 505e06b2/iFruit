@@ -3,83 +3,93 @@
 const _utils = arguments[0];
 const page_manager = arguments[1];
 
-function msToGTAHrMin(ms) {
-	const gta_mins = ms / 2000;
-	const hrs = Math.floor(gta_mins / 60).toString().padStart(2, "0");
-	const mins = Math.floor(gta_mins % 60).toString().padStart(2, "0");
-	return `${hrs}:${mins}`;
-}
+function Timer(obj) {
+	const getFutureDate = () => {
+		return +(new Date((new Date()).getTime() + values.length*120000)); //+ -> to int
+	};
 
-function createTimer(future_time, name, dont_go_back) {
-	if(!name) name = "Timer " + (page_manager.persistence.timer_id++);
-	let content;
+	const values = {};
+	//essential
+	values.length = obj.length;
+	//non-essential
+	values.id = (obj.id) ? obj.id : page_manager.persistence.timer_id++;
+	values.name = (obj.name) ? obj.name : "Timer " + values.id;
+	values.persist = (obj.persist) ? obj.persist : false;
+	values.future_date = (obj.future_date) ? obj.future_date : getFutureDate();
+
+	page_manager.persistence.timers[values.id] = values; //this is now a permanent reference, so you can just edit values.*
+
 	let name_elem;
-
-	page_manager.persistence.timers[name] = future_time.getTime();
-
+	let value_elem;
+	let persist_elem;
 	const elem = _utils.createElement("div", {
 		class: "timer",
-		name: name,
 		contents: [
-			_utils.createElement("img", {
-				src: "icons/remixicon-close-circle-line.svg",
-				onclick: () => {if(window.confirm(`Are you sure you want to delete "${name}"?`)) removeTimer()}
+			_utils.createElement("i", {
+				class: "ri-close-circle-line",
+				title: "Delete",
+				onclick: () => {if(window.confirm(`Are you sure you want to delete "${values.name}"?`)) this.delete()}
 			}),
-			name_elem = _utils.createElement("span", {
-				class: "name",
-				contents: name,
+			persist_elem = _utils.createElement("i", {
+				class: (values.persist) ? "ri-lock-fill" : "ri-lock-unlock-fill",
+				title: "Toggle persistence",
 				onclick: () => {
-					const new_name = window.prompt(`New name for "${name}"`);
-					if(new_name) {
-						delete page_manager.persistence.timers[name];
-						name = new_name;
-						page_manager.persistence.timers[name] = future_time.getTime();
-						name_elem.innerHTML = name;
+					if(window.confirm(`Are you sure you want to toggle the persistence of "${values.name}"?\nIf locked, and the timer reaches 00:00, it will remain in the Timer section`)) {
+						values.persist = !values.persist;
+						persist_elem.className = (values.persist) ? "ri-lock-fill" : "ri-lock-unlock-fill";
 					}
 				}
 			}),
-			content = _utils.createElement("span", {
-				contents: msToGTAHrMin(future_time.getTime() - (new Date()).getTime()),
+			name_elem = _utils.createElement("span", {
+				class: "name",
+				contents: values.name,
+				title: "Change name",
 				onclick: () => {
-					if(window.confirm(`Are you sure you want to reset "${name}"?`)) {
-						removeTimer();
-						createTimer(int_str, name, true);
+					const new_name = window.prompt(`New name for "${values.name}"`);
+					if(new_name) {
+						values.name = new_name;
+						name_elem.innerHTML = values.name;
+					}
+				}
+			}),
+			value_elem = _utils.createElement("span", {
+				contents: _utils.timeDeltaToGTADuration(values.length * 120000), //default to length of time
+				onclick: () => {
+					if(window.confirm(`Are you sure you want to reset "${values.name}"?`)) {
+						values.future_date = getFutureDate();
 					}
 				}
 			})
 		]
 	});
 
-	const removeTimer = () => {
-		delete page_manager.persistence.timers[name];
+	this.delete = () => {
+		clearInterval(updateLoop);
+		delete page_manager.persistence.timers[values.id];
 		elem.remove();
 		delete elem;
-		if(window.home_timers.childElementCount <= 1) {
-			window.home_timers.style.display = "";
+		if(page_manager.home_timers.childElementCount <= 1) {
+			page_manager.home_timers.style.display = "";
 		}
 	};
 
-	const interval = setInterval(() => {
-		const delta = future_time.getTime() - (new Date()).getTime();
+	const updateLoop = setInterval(() => {
+		let delta = values.future_date - (new Date());
 		if(delta < 0) {
-			clearInterval(interval);
-			removeTimer();
-			return;
+			delta = 0; //so persistent looks okay
+			if(!values.persist) this.delete();
 		}
-		content.innerHTML = msToGTAHrMin(delta);
+		value_elem.innerHTML = _utils.timeDeltaToGTADuration(delta);
 	}, 500);
 
-	window.home_timers.style.display = "block";
-	window.home_timers.appendChild(elem);
-	if(dont_go_back) return;
-	history.back();
-	history.back();
+	page_manager.home_timers.style.display = "block";
+	page_manager.home_timers.appendChild(elem);
 }
 
 if(page_manager.persistence.timer_id === undefined) page_manager.persistence.timer_id = 1;
 if(page_manager.persistence.timers === undefined) page_manager.persistence.timers = {};
 for(const [key, value] of Object.entries(page_manager.persistence.timers)) {
-	createTimer(new Date(value), key, true);
+	new Timer(value);
 }
 
 let name;
@@ -95,15 +105,15 @@ return _utils.createPage("timer", [
 	_utils.createElement("button", {
 		contents: "Create Timer",
 		onclick: () => {
-			if(window.home_timers.querySelector(`[name="${name.value}"]`)) {
-				alert(`A timer with the name "${name.value}" already exists!`);
-				return;
-			}
 			const gta_hours = parseInt(number.value);
 			if(isNaN(gta_hours) || gta_hours <= 0) return;
-			const future_time = new Date((new Date()).getTime() + gta_hours*2*60000);
+			new Timer({
+				name: name.value,
+				length: gta_hours
+			});
 
-			createTimer(future_time, name.value);
+			history.back();
+			history.back();
 			name.value = "";
 			number.value = "5"; //check it's the same as above
 		}
