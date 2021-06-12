@@ -112,8 +112,7 @@ return _utils.createPage("timer", [
 				length: gta_hours
 			});
 
-			history.back();
-			history.back();
+			history.go(-2);
 			name.value = "";
 			number.value = "5"; //check it's the same as above
 		}

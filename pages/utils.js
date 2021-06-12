@@ -79,6 +79,23 @@ return new (function() {
 		return ret;
 	};
 
+	this.createDropdown = (name, opts) => {
+		const ret = document.createElement("div");
+		ret.className = "dropdown";
+		ret.appendChild(this.createElement("span", {contents: name}));
+		const select = document.createElement("select");
+		for(const x of opts.options) {
+			const current_elem = document.createElement("option");
+			current_elem.innerHTML = x;
+			current_elem.value = x;
+			select.appendChild(current_elem);
+		}
+		if(opts.value) select.value = opts.value;
+		if(opts.onchange) select.onchange = () => opts.onchange(select);
+		ret.appendChild(select);
+		return ret;
+	}
+
 	this.createElement = (tag, opts) => {
 		const ret = document.createElement(tag);
 		for(const [key, value] of Object.entries(opts)) {

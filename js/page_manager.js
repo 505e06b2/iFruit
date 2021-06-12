@@ -40,11 +40,15 @@ async function PageManager() {
 	let _utils = null; //loadPage needs utils lol
 	_utils = await loadPage("utils");
 
-	const _page_dict = {
-		"home": await loadPage("home"),
-		"drawer": await loadPage("drawer"),
-		"timer": await loadPage("timer")
-	};
+	async function loadAll(name_arr) {
+		const load_dict = {}
+		for(const x of name_arr) load_dict[x] = loadPage(x);
+		const ret = {};
+		for(const x of name_arr) ret[x] = await load_dict[x];
+		return ret;
+	}
+
+	const _page_dict = await loadAll(["home", "drawer", "timer", "settings"]);
 
 	return this;
 }
