@@ -2,8 +2,11 @@
 	<head>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>iFruit</title>
+		<meta name="theme-color" content="black">
+		<link rel="manifest" href="app.webmanifest">
 		<link rel="stylesheet" href="remix_icons/remixicon.css">
 		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="css/theme_oled.css">
 		<script src="GTA-Online-Weather/gtatime.js"></script>
 		<script src="js/page_manager.js"></script>
 		<script>
@@ -15,7 +18,14 @@
 			}
 		</script>
 	</head>
-	<body>
-		<div id="loading">Loading...</div>
+	<body class="theme-default">
+		<div id="contents-container">
+			<div id="loading">Loading...</div>
+		</div>
+		<svg style="visibility: hidden; width: 0px; height: 0px"> <!-- This is for Firefox... -->
+			<defs>
+				<filter id="app-icon-filter"><feColorMatrix id="app-icon-filter-matrix" in="SourceGraphic" type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0"></filter>
+			</defs>
+		</svg>
 	</body>
 </html>

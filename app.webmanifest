@@ -1,0 +1,9 @@
+{
+	"name": "iFruit",
+	"short_name": "iFruit",
+	"start_url": ".",
+	"display": "standalone",
+	"orientation": "portrait-primary",
+	"background_color": "#333",
+	"description": "A recreation of the GTA V Phone"
+}

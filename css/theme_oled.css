@@ -1,0 +1,6 @@
+.theme-oled-dark {
+  --bg_colour: #000;
+  --bg_light_colour: #333;
+  --fg_colour: #eee;
+  --fg_dark_colour: #555;
+}

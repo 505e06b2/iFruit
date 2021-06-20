@@ -1,25 +1,54 @@
+.theme-default {
+  --bg_colour: #333;
+  --bg_light_colour: #666;
+  --fg_colour: #eee;
+  --fg_dark_colour: #999;
+}
+
 body {
 	font-family: sans-serif;
 	margin: 0px;
 	padding: 0px;
-	background: #333;
-	color: #eee;
+	background: var(--bg_colour);
+	color: var(--fg_colour);
 }
 
 input {
 	display: block;
 	width: 100%;
 	font-size: 200%;
-	background: #666;
+	background: var(--bg_light_colour);
 	border: none;
 	margin-bottom: 1vmin;
-	color: #eee;
-	border: 1px solid #999;
+	color: var(--fg_colour);
+	border: 1px solid var(--fg_dark_colour);
 	box-sizing: border-box;
 }
 
 input::placeholder {
-	color: #999;
+	color: var(--fg_dark_colour);
+}
+
+div.dropdown {
+	background: var(--bg_light_colour);
+	color: var(--fg_colour);
+	display: flex;
+	font-size: 200%;
+	width: 100%;
+	margin-bottom: 1vmin;
+}
+
+div.dropdown span {
+	min-width: 0px;
+	flex: 50% 1 1;
+}
+
+div.dropdown select {
+	min-width: 0px;
+	background: var(--bg_light_colour);
+	color: var(--fg_colour);
+	font-size: 100%;
+	flex: 50% 1 1;
 }
 
 .gtatime {
@@ -33,12 +62,12 @@ input::placeholder {
 	right: 2vw;
 	top: 25%;
 	bottom: 0px;
-	color: white;
+	color: var(--fg_colour);
 }
 
 button {
-	background: #666;
-	color: #eee;
+	background: var(--bg_light_colour);
+	color: var(--fg_colour);
 	display: block;
 	font-size: 200%;
 	width: 100%;
@@ -89,7 +118,7 @@ button {
 	position: fixed;
 	top: 0px;
 	height: 10vh;
-	background: #333;
+	background: var(--bg_colour);
 }
 
 .page .header #back_icon {
@@ -115,7 +144,7 @@ button {
 	left: 0px;
 	height: 25vh;
 	width: 100vw;
-	background: #333;
+	background: var(--bg_colour);
 }
 
 .page .header_time #home_timedisplay {
@@ -130,7 +159,15 @@ button {
 .page .section_title {
 	font-size: 50%;
 	text-align: left;
-	border-bottom: solid 1px #eee;
+	border-bottom: solid 1px var(--fg_colour);
+}
+
+.page .section#section_settings {
+	margin-top: 5vh;
+}
+
+.page .section#section_settings div.small {
+	font-size: 75%;
 }
 
 .page .section#section_timers {
@@ -176,7 +213,8 @@ button {
 	cursor: pointer;
 	position: relative;
 	aspect-ratio: 1;
-	background: #666;
+	filter: url(#app-icon-filter);
+	background: var(--bg_light_colour);
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: 50%;
@@ -202,7 +240,7 @@ button {
 	left: 0px;
 	height: 10vh;
 	width: 100vw;
-	background: #333;
+	background: var(--bg_colour);
 }
 
 .page .footer #home_drawericon {

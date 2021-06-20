@@ -16,15 +16,15 @@ async function PageManager() {
 
 	//private
 	const self = this;
-
+	const contents_container = document.querySelector('#contents-container');
 	window.onhashchange = () => {
 		const goto = location.hash.slice(1);
 		if(goto === "loading") { //this is if encountered after loading
-			history.back();
+			history.go(-history.length-1);
 			return;
 		}
-		document.body.innerHTML = "";
-		document.body.appendChild(_page_dict[goto]);
+		contents_container.innerHTML = "";
+		contents_container.appendChild(_page_dict[goto]);
 	};
 
 	window.onbeforeunload = () => {

@@ -34,6 +34,7 @@ return _utils.createPage("home", [
 		weather = _utils.createElement("div", { contents: v.weather })
 	]),
 	page_manager.home_timers = _utils.createSection("Timers", []),
+	page_manager.settings = _utils.createSection("Settings", []),
 	_utils.createHeaderFooter("footer",
 		_utils.createElement("i", {
 			id: "home_drawericon",
